@@ -11,7 +11,6 @@ def random_matrix(n: int) -> np.array:
     :param n: matrix size
     :return: random n x n x 3 matrix
     """
-    a = n+n
     random_matrix = np.random.randint(0, 256, size=(n, n, 3), dtype=np.uint8)
     return random_matrix
 
