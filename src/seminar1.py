@@ -11,8 +11,8 @@ def random_matrix(n: int) -> np.array:
     :param n: matrix size
     :return: random n x n x 3 matrix
     """
-    random_matrix = np.random.randint(0, 256, size=(n, n, 3), dtype=np.uint8)
-    return random_matrix
+    return np.random.randint(0, 255, size=(n, n, 3), dtype=np.uint8)
+
 
 
 def broadcast_array(a: np.array, n: int) -> np.array:
@@ -34,11 +34,9 @@ def inplace_operation(a: np.array, b: np.array) -> None:
     :param b: matrix B
     :return: None
     """
-    np.add(a, b, out=b)
-    np.divide(a, 2, out=a)
-    np.negative(a, out=a)
-    result = np.multiply(a, b, out=a)
-    return result
+    a += b
+    a *= -1
+    a /= 2
 
 
 def get_elements(a: np.array, indices: np.array) -> np.array:
