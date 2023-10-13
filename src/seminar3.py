@@ -113,7 +113,6 @@ class DenseLayer:
         d_result = np.dot(d_out, self.W.value.T)
         self.W.grad = np.dot(self.X.T, d_out)
         self.B.grad = np.sum(d_out, axis=0, keepdims=True)
-
         return d_result
 
     def params(self):
