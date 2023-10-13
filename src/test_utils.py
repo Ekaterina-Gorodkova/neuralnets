@@ -2,7 +2,7 @@
 import os.path
 import numpy as np
 import matplotlib.pyplot as plt
-
+from load_data import load_local_data
 
 def check_gradient(f, x, delta=1e-5, tol=1e-4):
     """
@@ -46,6 +46,7 @@ def check_gradient(f, x, delta=1e-5, tol=1e-4):
 
     print("Gradient check passed!")
     return True
+
 
 
 def get_preprocessed_data(include_bias=True):
