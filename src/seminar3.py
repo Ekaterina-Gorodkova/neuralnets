@@ -48,13 +48,21 @@ class ReLULayer:
 
     def forward(self, X: np.array) -> np.array:
         """
+
+=======
         TODO: Implement forward pass
+
         Hint: you'll need to save some information about X
         in the instance variable to use it later in the backward pass
         :param X: input data
         :return: Rectified Linear Unit
         """
-        raise Exception("Not implemented!")
+
+        self.mask = (X > 0)
+
+        return np.where(X > 0, X, 0)
+
+
 
     def backward(self, d_out: np.array) -> np.array:
         """
@@ -65,8 +73,12 @@ class ReLULayer:
         d_result: np array (batch_size, num_features) - gradient
           with respect to input
         """
+
+        return d_out * self.mask
+=======
         # TODO: Implement backward pass
-        raise Exception("Not implemented!")
+       
+
 
     def params(self) -> dict:
         # ReLU Doesn't have any parameters
@@ -82,7 +94,12 @@ class DenseLayer:
     def forward(self, X):
         # TODO: Implement forward pass
         # Your implementation shouldn't have any loops
-        raise Exception("Not implemented!")
+
+        self.X = X.copy()
+        return X @ self.W.value + self.B.value
+
+        
+
 
     def backward(self, d_out):
         """
@@ -96,17 +113,26 @@ class DenseLayer:
         d_result: np array (batch_size, n_input) - gradient
           with respect to input
         """
-        # TODO: Implement backward pass
+
         # Compute both gradient with respect to input
         # and gradients with respect to W and B
         # Add gradients of W and B to their `grad` attribute
 
         # It should be pretty similar to linear classifier from
         # the previous assignment
+
+        # print('d_out shape is ', d_out.shape)
+        # print('self.W shape is ', self.W.value.shape)
+        d_result = np.dot(d_out, self.W.value.T)
+        self.W.grad = np.dot(self.X.T, d_out)
+        self.B.grad = np.sum(d_out, axis=0, keepdims=True)
+
+        return d_result
+
         # raise Exception("Not implemented!")
         # print('d_out shape is ', d_out.shape)
         # print('self.W shape is ', self.W.value.shape)
-        raise Exception("Not implemented!")
+
 
     def params(self):
         return {'W': self.W, 'B': self.B}
@@ -134,7 +160,11 @@ class TwoLayerNet:
 
     def forward(self, X, y):
         """
+
+        Computes total loss and updates parameters
+
         Computes total loss and updates parameter gradients
+
         on a batch of training examples
         Arguments:
         X, np array (batch_size, input_features) - input data
@@ -146,8 +176,14 @@ class TwoLayerNet:
         # Set layer parameters gradient to zeros
         # After that compute loss and gradients
         for layer in self.layers:
+
+            Z = layer.forward(Z)
+            for param in layer.params().values():
+                param.grad = np.zeros_like(param.grad)
+
             for param in layer.params().values():
                 pass
+
 
         self.loss, self.d_out = softmax_with_cross_entropy(Z, y)
         return Z
@@ -161,7 +197,13 @@ class TwoLayerNet:
         for layer in reversed(self.layers):
             tmp_d_out = layer.backward(tmp_d_out)
             for param in layer.params().values():
+
+                reg_loss, reg_grad = l2_regularization(param.value, self.reg)
+                self.loss += reg_loss
+                param.grad += reg_grad
+
                 pass
+
 
     def fit(self, X, y, learning_rate=1e-3, num_iters=10000,
             batch_size=4, verbose=True):
@@ -204,9 +246,12 @@ class TwoLayerNet:
         return loss_history
 
 
+
+
 if __name__ == '__main__':
     """1 point"""
     # Train your TwoLayer Net! 
     # Test accuracy must be > 0.33
     # Save report to output/seminar3
     model = TwoLayerNet()
+
