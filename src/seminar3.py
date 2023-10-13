@@ -210,6 +210,7 @@ class TwoLayerNet:
         return loss_history
 
 
+
 if __name__ == '__main__':
     """1 point"""
     # Train your TwoLayer Net!
