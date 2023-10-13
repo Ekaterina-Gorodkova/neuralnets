@@ -49,7 +49,7 @@ class ReLULayer:
     def forward(self, X: np.array) -> np.array:
         """
 
-=======
+
         TODO: Implement forward pass
 
         Hint: you'll need to save some information about X
@@ -75,7 +75,7 @@ class ReLULayer:
         """
 
         return d_out * self.mask
-=======
+
         # TODO: Implement backward pass
        
 
