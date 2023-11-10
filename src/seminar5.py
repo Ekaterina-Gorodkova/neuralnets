@@ -14,7 +14,6 @@ def build_conv_layer() -> tf.keras.layers.Conv2D:
     """
     # TODO Create layer with necessary filters, kernel size and striding step
     my_layer = tf.keras.layers.Conv2D(filters=2, kernel_size=(5,5), strides=(5,5))
-
     return my_layer
 
 
