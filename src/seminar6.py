@@ -23,6 +23,7 @@ BUCKET_NAME = 'neuralnets2023'
 YOUR_GIT_USER = 'Ekaterina-Gorodkova'
 
 image_size = (180, 180)
+
 batch_size = 64
 
 
