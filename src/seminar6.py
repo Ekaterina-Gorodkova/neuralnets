@@ -140,7 +140,7 @@ def train():
 
     ############
     model = make_model(input_shape=image_size + (3,), num_classes=2)
-    epochs = 4
+    epochs = 7
 
     callbacks = [
         keras.callbacks.ModelCheckpoint("save_at_{epoch}.keras"),
